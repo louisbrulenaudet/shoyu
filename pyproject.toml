@@ -1,0 +1,101 @@
+[project]
+name = "shoyu"
+package = false
+version = "0.1.0"
+description = "A Python package for analyzing and visualizing Hugging Face model statistics, including performance metrics, architectures, resource usage, and more."
+license = { text = "Apache-2.0" }
+readme = "README.md"
+keywords = [
+    "bert", "llm-agents", "llm-automation", "llm-analytics", "llm-data-processing",
+    "llm-data-analysis", "llm-data-engineering", "llm-data-science", "llm-data-mining",
+    "llm-data-cleaning", "llm-data-preprocessing", "llm-data-wrangling",
+    "llm-data-integration", "llm-data-transformation", "llm-data-modeling",
+    "llm-data-visualization"
+]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science and Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Science",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Deep Learning",
+    "Topic :: Text Processing :: General"
+]
+
+requires-python = ">=3.12"
+
+dependencies = [
+    "aiohttp==3.12.13",
+    "aiohttp-socks==0.10.1",
+    "ddgs>=9.0.0",
+    "psutil==7.0.0",
+    "pydantic-settings>=2.10.1",
+    "tqdm>=4.67.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pre-commit==4.2.0",
+    "pre-commit-uv==4.1.4",
+    "pytest==8.4.1",
+    "pytest-asyncio==1.0.0",
+    "pytest-cov==6.2.1",
+    "ruff==0.12.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+addopts = "--maxfail=1 --disable-warnings -q --cov=app --cov-report=term-missing"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff.lint]
+select = ["E","W","F","UP","B","SIM","I","ANN","T20"]
+ignore = ["B008","E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"**/{tests,docs}/*" = ["ANN","E402"]
+
+[tool.logfire]
+pydantic_plugin_record = "all"
+
+[tool.ruff]
+fix = true
+
+[tool.pyright]
+exclude = ["**/tests"]
+
+[tool.ruff.format]
+quote-style = "double"
+line-ending = "auto"
+
+[tool.ruff.lint.pyupgrade]
+keep-runtime-typing = true
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
+
+[dependency-groups]
+dev = ["ty==0.0.1a11"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "pass",
+    "raise ImportError",
+]
+ignore_errors = true
